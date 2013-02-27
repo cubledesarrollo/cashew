@@ -1,0 +1,9 @@
+@CHARSET "UTF-8";
+/*
+ * defaul.css
+ * Fichero para incluir CSS extra, ademas del que se compila con LESS.
+ */
+.cashew-content
+{
+	margin-top: 48px;
+}

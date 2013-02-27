@@ -1,0 +1,245 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>CashewModel &mdash; Cashew 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Cashew 1.0 documentation" href="index.html" />
+    <link rel="prev" title="Welcome to Cashew’s documentation!" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to Cashew’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Cashew 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="cashewmodel">
+<h1>CashewModel<a class="headerlink" href="#cashewmodel" title="Permalink to this headline">¶</a></h1>
+<p>Cashew lleva incorporado un sencillo ORM, que permite que los modelos se mapeen
+automáticamente con la base de datos.</p>
+<div class="section" id="creacion-de-un-modelo">
+<h2>Creación de un modelo<a class="headerlink" href="#creacion-de-un-modelo" title="Permalink to this headline">¶</a></h2>
+<p>Cashew utiliza por defecto una nomenclatura estrica para los modelos. El nombre
+de cada modelo tiene que estar definido en <strong>singular</strong> y su tabla correspondiende
+en la base de datos tiene que estar en <strong>plural</strong>.</p>
+<p>Por ejemplo, definimos el siguiente modelo:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+<span class="k">class</span> <span class="nc">Model</span> <span class="k">extends</span> <span class="nx">CashewModel</span>
+<span class="p">{</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Su tabla correspondiente en la base de datos tendría que estar generada por la
+siguiente migración:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+<span class="k">class</span> <span class="nc">Migration_Add_models</span> <span class="k">extends</span> <span class="nx">CI_Migration</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">up</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="c1">// Aquí se definenen los campos...</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">dbforge</span><span class="o">-&gt;</span><span class="na">create_table</span><span class="p">(</span><span class="s1">&#39;models&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Los atributos que tenga el modelo se tienen que definir como campos en la tabla
+de la base de datos, ya que automáticamente estos serán mapeados a atributos
+del modelo.</p>
+<div class="section" id="definir-atributos">
+<h3>Definir Atributos<a class="headerlink" href="#definir-atributos" title="Permalink to this headline">¶</a></h3>
+<p>Los modelos tienen que tener los siguientes atributos definidos de forma
+obligatoria:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">id</span></tt> Identificador del modelo, que tiene que ser definido como entero,
+clave primaria y autoincremental.</li>
+</ul>
+<p>También se pueden definir los siguientes atributos que serán tratados de forma
+automática, aunque son opcionales:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">created_at</span></tt> Fecha de creación del modelo.</li>
+<li><tt class="docutils literal"><span class="pre">updated_at</span></tt> Fecha de la última actualización del modelo.</li>
+</ul>
+<p>Así pues, una migración mínima que contengan todos estos parámetros, quedaría
+de la siguiente forma:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+<span class="k">class</span> <span class="nc">Migration_Add_models</span> <span class="k">extends</span> <span class="nx">CI_Migration</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">up</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">dbforge</span><span class="o">-&gt;</span><span class="na">add_field</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
+            <span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+                <span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;INT&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;constraint&#39;</span> <span class="o">=&gt;</span> <span class="mi">11</span><span class="p">,</span>
+                <span class="s1">&#39;unsigned&#39;</span> <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">,</span>
+                <span class="s1">&#39;auto_increment&#39;</span> <span class="o">=&gt;</span> <span class="k">TRUE</span>
+            <span class="p">),</span>
+            <span class="s1">&#39;created_at&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+                <span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;DATETIME&#39;</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="s1">&#39;updated_at&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+                <span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;DATETIME&#39;</span><span class="p">,</span>
+            <span class="p">),</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">dbforge</span><span class="o">-&gt;</span><span class="na">add_key</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="k">TRUE</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">dbforge</span><span class="o">-&gt;</span><span class="na">create_table</span><span class="p">(</span><span class="s1">&#39;models&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">down</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">dbforge</span><span class="o">-&gt;</span><span class="na">drop_table</span><span class="p">(</span><span class="s1">&#39;models&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="metodos-del-modelo">
+<h3>Métodos del modelo<a class="headerlink" href="#metodos-del-modelo" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="CashewModel">
+<em class="property">class </em><tt class="descname">CashewModel</tt><a class="headerlink" href="#CashewModel" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">CashewModel CashewModel-&gt;get($id)</tt></dt>
+<dd></dd></dl>
+
+<p>Obtiene la instancia del modelo que tiene como identificador el que se le pasa
+por parámetro.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+<span class="c1">// Suponemos que estamos en el método de un controlador...</span>
+<span class="nv">$model</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">Model</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="nv">$id</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Devuelve <tt class="docutils literal"><span class="pre">null</span></tt> si no existe ningún modelo con el identificador indicado.</p>
+<dl class="method">
+<dt>
+<tt class="descname">CashewModel CashewModel-&gt;get_by($attribute, $value)</tt></dt>
+<dd></dd></dl>
+
+<p>Obtiene la instancia del modelo que tiene el valor <tt class="docutils literal"><span class="pre">$value</span></tt> en el atributo
+<tt class="docutils literal"><span class="pre">$attribute</span></tt>. En caso de que haya más de una ocurrencia sólo se obtiene el
+primer resultado. Devuelve <tt class="docutils literal"><span class="pre">null</span></tt> si no existe ningún modelo con ese
+parámetro.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+<span class="c1">// Suponemos que estamos en el método de un controlador...</span>
+<span class="nv">$model</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">Model</span><span class="o">-&gt;</span><span class="na">get_by</span><span class="p">(</span><span class="s1">&#39;att&#39;</span><span class="p">,</span> <span class="nv">$value</span><span class="p">);</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt>
+<tt class="descname">Array CashewModel-&gt;filter(array('attribute' =&gt; 'value', [...]))</tt></dt>
+<dd></dd></dl>
+
+<p>Realiza una búsqueda entre todos los modelos almacenados en la base de datos
+y devuelve un array con aquellos que cumplen los criterios.</p>
+<p>Para indicar los criterios se utiliza un array asociativo donde el índice es el
+nombre del atributo, y el valor es el valor que tiene que tener.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+<span class="c1">// Suponemos que estamos en el método de un controlador...</span>
+<span class="nv">$models</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">Model</span><span class="o">-&gt;</span><span class="na">filter</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">&#39;att&#39;</span> <span class="o">=&gt;</span> <span class="nv">$value</span><span class="p">));</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt>
+<tt class="descname">bool CashewModel-&gt;save()</tt></dt>
+<dd></dd></dl>
+
+<p>Guarda el modelo actual en la base de datos. Devuelve <tt class="docutils literal"><span class="pre">true</span></tt> si se ha guardado
+correctamente y <tt class="docutils literal"><span class="pre">false</span></tt> en caso contrario.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">CashewModel</a><ul>
+<li><a class="reference internal" href="#creacion-de-un-modelo">Creación de un modelo</a><ul>
+<li><a class="reference internal" href="#definir-atributos">Definir Atributos</a></li>
+<li><a class="reference internal" href="#metodos-del-modelo">Métodos del modelo</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to Cashew&#8217;s documentation!</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/models.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to Cashew’s documentation!"
+             >previous</a> |</li>
+        <li><a href="index.html">Cashew 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Cuble Desarrollo S.L..
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

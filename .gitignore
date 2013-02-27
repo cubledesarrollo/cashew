@@ -1,5 +1,17 @@
+*~
+*.pyc
 */config/development
 */logs/log-*.php
 */logs/!index.html
 */cache/*
 */cache/!index.html
+application/logs/*.php
+application/config/database.php
+application/config/config.php
+application/tests/report/*
+nbproject
+.buildpath
+.project
+.settings/
+.DS_Store
+.pydevproject

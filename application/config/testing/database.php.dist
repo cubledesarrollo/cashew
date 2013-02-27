@@ -1,0 +1,23 @@
+<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
+/**
+ * Cambiamos el grupo activo de la base de datos.
+ */
+$active_group = 'testing';
+$active_record = TRUE;
+
+$db['testing']['hostname'] = 'localhost';
+$db['testing']['username'] = '';
+$db['testing']['password'] = '';
+$db['testing']['database'] = 'cashew_testing';
+$db['testing']['dbdriver'] = 'mysql';
+$db['testing']['dbprefix'] = '';
+$db['testing']['pconnect'] = TRUE;
+$db['testing']['db_debug'] = TRUE;
+$db['testing']['cache_on'] = FALSE;
+$db['testing']['cachedir'] = '';
+$db['testing']['char_set'] = 'utf8';
+$db['testing']['dbcollat'] = 'utf8_general_ci';
+$db['testing']['swap_pre'] = '';
+$db['testing']['autoinit'] = TRUE;
+$db['testing']['stricton'] = FALSE;
