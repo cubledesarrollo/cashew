@@ -26,6 +26,14 @@
         <link rel="stylesheet" href="<?php echo base_url('/css/font-awesome/font-awesome-ie7.min.css')?>">
         <![endif]-->
         
+        <?php // Cargar entorno de JavaScript ?>
+        <script type="text/javascript">
+        var ENVIRONMENT = {
+                site_url : "<?php echo site_url(); ?>";
+                base_url : "<?php echo base_url(); ?>";
+                };
+        </script>
+        
         <?php if(isset($js)):?>
         <?php foreach($js as $file):?>
         <script type="text/javascript" src="<?php echo base_url('/js/'.$file)?>" ></script>
