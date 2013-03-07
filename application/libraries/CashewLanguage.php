@@ -49,6 +49,7 @@ class CashewLanguage
         if ($this->CI->input->get('l', true) !== false)
         {
             $this->locale = $this->CI->input->get('l', true);
+            $this->set_session_locale($this->locale);
         }
         else if ($this->get_session_locale() !== false)
         {
@@ -57,6 +58,7 @@ class CashewLanguage
         else
         {
             $this->locale = $this->CI->config->item('cashew_default_language');
+            $this->set_session_locale($this->locale);
         }
         
         /**

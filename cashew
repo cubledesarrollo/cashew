@@ -13,6 +13,7 @@ function init {
     fi
     cp ./application/config/config.php.dist ./application/config/config.php
     cp ./application/config/database.php.dist ./application/config/database.php
+    cp ./application/config/testing/database.php.dist ./application/config/testing/database.php
 }
 #
 # Command: translate
