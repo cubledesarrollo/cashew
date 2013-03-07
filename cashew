@@ -1,5 +1,20 @@
 #!/bin/bash
 #
+# Command: init
+# Actualiza los ficheros de traduccion de Cashew.
+#
+function init {
+    stamp=`date +%s`
+    if [ -f ./application/config/config.php ]; then
+        mv ./application/config/config.php ./application/config/config-$stamp.php
+    fi
+    if [ -f ./application/config/database.php ]; then
+        mv ./application/config/database.php ./application/config/database-$stamp.php
+    fi
+    cp ./application/config/config.php.dist ./application/config/config.php
+    cp ./application/config/database.php.dist ./application/config/database.php
+}
+#
 # Command: translate
 # Actualiza los ficheros de traduccion de Cashew.
 #
@@ -9,16 +24,16 @@ function translate {
     find ./application/errors -iname "*.php" >> files.txt
     xgettext -L PHP --indent --from-code=UTF-8 -f files.txt -o messages.pot
     for file in `ls application/language/locales/`; do
-	if [ $file != 'index.html' ]; then
-	    messages=./application/language/locales/$file/LC_MESSAGES
-	    if [ -f $messages/messages.po ]; then
-		msgmerge -o $messages/messages.po $messages/messages.po messages.pot
-	    else
-		cp messages.pot $messages/messages.po
-	    fi
-	    msgfmt $messages/messages.po
-	    mv messages.mo $messages/
-	fi
+    if [ $file != 'index.html' ]; then
+        messages=./application/language/locales/$file/LC_MESSAGES
+        if [ -f $messages/messages.po ]; then
+        msgmerge -o $messages/messages.po $messages/messages.po messages.pot
+        else
+        cp messages.pot $messages/messages.po
+        fi
+        msgfmt $messages/messages.po
+        mv messages.mo $messages/
+    fi
     done
     rm files.txt
     rm messages.pot
@@ -121,6 +136,8 @@ fi
 command=$1
 if [ "$command" == "migrate" ]; then
     migrate
+elif [ "$command" == "init" ]; then
+    init
 elif [ "$command" == "translate" ]; then
     translate
 elif [ "$command" == "urli18n" ]; then

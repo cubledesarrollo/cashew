@@ -8,27 +8,36 @@
  * @author Cuble Desarrollo S.L.
  *
  */
-class CashewMongo extends Mongo
+if (class_exists('Mongo'))
 {
-    public $db;
-    
-    function __construct()
+    class CashewMongo extends Mongo
     {
-        $CI = & get_instance();
-        $CI->load->config('mongo');
+        public $db;
         
-        $server = $CI->config->item('mongo_server');
-        $database = $CI->config->item('mongo_database');
-        
-        if ($server)
+        function __construct()
         {
-            parent::__construct($server);
+            $CI = & get_instance();
+            $CI->load->config('mongo');
+            
+            $server = $CI->config->item('mongo_server');
+            $database = $CI->config->item('mongo_database');
+            
+            if ($server)
+            {
+                parent::__construct($server);
+            }
+            else
+            {
+                parent::__construct();
+            }
+            
+            $this->db = $this->$database;
         }
-        else
-        {
-            parent::__construct();
-        }
-        
-        $this->db = $this->$database;
     }
+}
+else
+{
+    // Throw error
+    throw new Exception('Mongo support must be installed (sudo pecl install mongo)');
+    die();
 }

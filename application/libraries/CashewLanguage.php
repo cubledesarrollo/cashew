@@ -50,19 +50,13 @@ class CashewLanguage
         {
             $this->locale = $this->CI->input->get('l', true);
         }
-        else if($this->CI->session->userdata('locale'))
-        {
-            $this->locale = $this->CI->session->userdata('locale');
-        }
         else if ($this->get_session_locale() !== false)
         {
             $this->locale = $this->get_session_locale();
-           
         }
-        // Valor por defecto.
         else
         {
-            $this->locale = 'en';
+            $this->locale = $this->CI->config->item('cashew_default_language');
         }
         
         /**
@@ -79,11 +73,18 @@ class CashewLanguage
 
     }
     
+    /**
+     * 
+     * @param unknown_type $locale
+     */
     public function set_session_locale($locale)
     {
         $this->CI->session->set_userdata('locale', $locale);
     }
 
+    /**
+     * 
+     */
     public function get_session_locale()
     {
         return $this->CI->session->userdata('locale');

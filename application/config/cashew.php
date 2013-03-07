@@ -11,11 +11,18 @@ $config['cashew_app_name'] = _('Cashew App');
 $config['cashew_test_ab']  = TRUE;
 
 /**
+ * Identificador de Google Analytics.
+ */
+$config['analytics_enabled'] = false;
+$config['analytics_id'] = "XXXXXXX-XX";
+
+
+/**
  * Datos del usuario de administración.
  */
-$config['cashew_admin_enabled'] = true;
-$config['cashew_admin_user'] = 'info@cuble.es';
-$config['cashew_admin_password'] = '961531931';
+$config['cashew_admin_enabled'] = false;
+$config['cashew_admin_user'] = '';
+$config['cashew_admin_password'] = '';
 
 /**
  * Validación de usuarios registrados.

@@ -1065,6 +1065,6 @@ class CashewMongoModel extends CI_Model
 
 /**
  * Hack para poder llamar al modelo CashewModel.
- * @author Marcos Gabarda
+ * @author Cuble Desarollo S.L.
  */
 class MY_Model extends CashewModel {}

@@ -6,7 +6,3 @@
         <h1><?php echo sprintf(_('¡Bienvenido a %s!'), $app) ?></h1>
     </div>
 </div>
-<?php
-$this->load->helper('text');
-echo convert_accented_characters("áñooR fulör");
-?>

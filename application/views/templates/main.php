@@ -8,6 +8,7 @@
         <?php endif;?>
         
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <?php if(isset($less)):?>
         <?php foreach($less as $file):?>
@@ -21,6 +22,10 @@
         <?php endforeach;?>
         <?php endif;?>
         
+        <!--[if IE 7]>
+        <link rel="stylesheet" href="<?php echo base_url('/css/font-awesome/font-awesome-ie7.min.css')?>">
+        <![endif]-->
+        
         <?php if(isset($js)):?>
         <?php foreach($js as $file):?>
         <script type="text/javascript" src="<?php echo base_url('/js/'.$file)?>" ></script>
@@ -28,6 +33,7 @@
         <?php endif;?>
         <link rel="shortcut icon" href="<?php echo base_url('/favicon.png')?>">
         <link rel="author" href="<?php echo base_url("humans.txt")?>" />
+        <?php google_analytics(); ?>
     </head>
     <body>
         <div class="navbar navbar-fixed-top">

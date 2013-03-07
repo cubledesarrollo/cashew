@@ -357,14 +357,21 @@ class CashewController extends CI_Controller
                 // Cargamos el LESS de desarrollo
                 $this->add_less('style.less');
                 
+                // Font-Awesome
+                $this->add_css('font-awesome/font-awesome.css');
+                
                 break;
             case 'production':
                 // Añadimos JQuery y otros JavaScripts
                 $this->add_js('jquery/jquery.min.js');
                 $this->add_js('bootstrap/bootstrap-alert.js');
-
+                
                 // Cargamos el CSS de produccion.
                 $this->add_css('style.css');
+                
+                // Font-Awesome
+                $this->add_css('font-awesome/font-awesome.min.css');
+                
             default:
                 break;
         }
@@ -393,7 +400,7 @@ class CashewController extends CI_Controller
         {
             // devuelve false sino es testab, si es devuelve int corresponde a 
             // la version a mostrar
-            $this->test_ab = isTest();
+            $this->test_ab = is_test();
         }
     }
 
