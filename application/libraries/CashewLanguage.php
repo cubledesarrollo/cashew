@@ -77,7 +77,7 @@ class CashewLanguage
     
     /**
      * 
-     * @param unknown_type $locale
+     * @param string $locale
      */
     public function set_session_locale($locale)
     {

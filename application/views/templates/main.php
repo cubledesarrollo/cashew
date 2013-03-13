@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="<?php echo current_lang()?>">
     <head>
         <?php if (isset($title)): ?>
         <title><?php echo $app ?> | <?php echo $title?></title>

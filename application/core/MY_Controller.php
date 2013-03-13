@@ -320,6 +320,7 @@ class CashewController extends CI_Controller
      * @var array
      */
     protected $js = array();
+    protected $js_footer = array();
 
     protected $meta = array();
 
@@ -594,11 +595,19 @@ class CashewController extends CI_Controller
     /**
      *
      * Añade un fichero JavaScript al template.
-     * @param unknown_type $js_file
+     * @param string $js_file
+     * @param boolean $footer: Agrega el JS al pie de la página.
      */
-    protected function add_js($js_file)
+    protected function add_js($js_file, $footer=false)
     {
-        $this->js[] =  $js_file;
+        if ($footer)
+        {
+            $this->js_footer[] =  $js_file;
+        }
+        else
+        {
+            $this->js[] =  $js_file;
+        }
     }
 
    /**
@@ -642,6 +651,7 @@ class CashewController extends CI_Controller
                       'title' => $this->title,
                       'css' => $this->css,
                       'js' => $this->js,
+                      'js_footer' => $this->js_footer,
                       'less' => $this->less,
                       'meta' => $this->meta,
                       'is_authenticated' => $this->cashewauth->is_authenticated(),

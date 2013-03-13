@@ -38,7 +38,7 @@ function is_test()
 }
 
 /**
- * 
+ * Helper para incluir Google Analytics en la página.
  */
 function google_analytics()
 {
@@ -66,7 +66,7 @@ function google_analytics()
 }
 
 /**
- * 
+ * Muestra los mensajes almancenados en flashdata.
  */
 function alerts()
 {
@@ -91,4 +91,14 @@ function alerts()
         </div>
     <?php
     endif;
+}
+
+/**
+ * 
+ */
+function current_lang()
+{
+    $CI = & get_instance();
+    $CI->load->library("CashewLanguage");
+    return  $CI->cashewlanguage->get_session_locale();
 }
