@@ -4,7 +4,7 @@
  * @author Cuble Desarrollo
  *
  */
-class Admin extends CashewController
+class Access extends CashewController
 {
     function __construct()
     {

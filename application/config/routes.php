@@ -41,6 +41,10 @@
 $route['default_controller'] = "welcome";
 $route['404_override'] = '';
 
+/* --- Admin Panel --- */
+$route['admin'] = 'admin/access';
+
+
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
