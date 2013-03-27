@@ -22,6 +22,7 @@ function init {
 function translate {
     find ./application/views -iname "*.php" > files.txt
     find ./application/controllers -iname "*.php" >> files.txt
+    find ./application/helpers -iname "*.php" >> files.txt
     find ./application/errors -iname "*.php" >> files.txt
     xgettext -L PHP --indent --from-code=UTF-8 -f files.txt -o messages.pot
     for file in `ls application/language/locales/`; do
